@@ -17,16 +17,15 @@ backend/coverage/
 /out/
 frontend/.next/
 frontend/out/
-frontend/.next/**
-# Next.js specific generated files
-frontend/.next/static/
-frontend/.next/server/
-frontend/.next/cache/
-frontend/.next/types/
-frontend/.next/trace
-frontend/.next/**/*.js
-frontend/.next/**/*.json
-frontend/.next/**/*.map
+# Next.js specific generated files (these are already covered by frontend/.next/ above, but explicit paths can be useful)
+# frontend/.next/static/
+# frontend/.next/server/
+# frontend/.next/cache/
+# frontend/.next/types/
+# frontend/.next/trace
+# frontend/.next/**/*.js
+# frontend/.next/**/*.json
+# frontend/.next/**/*.map
 
 # Production builds
 /build
@@ -114,14 +113,15 @@ docker-compose.override.yml
 .dockerignore
 
 # Environment variables
-.env
-.env.local
-.env.production
-frontend/.env
-backend/.env
+.env # Duplicated from "Local env files" section, keep one.
+.env.local # Duplicated from "Local env files" section, keep one.
+.env.production # Duplicated from "Local env files" section, keep one.
+frontend/.env # This one specifically for frontend (if different from root .env)
+backend/.env # This one specifically for backend (if different from root .env)
 
 # IDE and Editor files
-.vscode/
+# .vscode/ (if you choose to ignore the whole folder for local user settings)
+.vscode/*.json # To ignore specific settings files but keep extensions.json, etc.
 .idea/
 *.swp
 *.swo
@@ -172,9 +172,9 @@ backend/logs/
 .cache
 .parcel-cache
 
-# Next.js build output
-.next
-out
+# Next.js build output (Duplicated from "Next.js" section, keep one. Frontend specific paths are already above)
+# .next
+# out
 
 # Nuxt.js build / generate output
 .nuxt
@@ -265,3 +265,12 @@ yarn.lock
 pnpm-lock.yaml
 # Note: package-lock.jsonは通常commitすべきですが、
 # 開発環境が異なる場合は除外することがあります
+
+# --- VS Code / Dev Containers specific (Add these lines) ---
+# VS Code Workspace files (for multi-root workspace)
+*.code-workspace
+# Dev Container specific configuration (if you choose not to share it)
+/.devcontainer/devcontainer.json
+# VS Code settings directory (if you want to ignore all local VS Code settings)
+# If you want to keep extensions.json and tasks.json, use .vscode/*.json above instead
+.vscode/

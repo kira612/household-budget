@@ -1,24 +1,43 @@
 // household-budget/.devcontainer/devcontainer.json
 {
-  "name": "Household Budget App",
-  // docker-compose.yml を使用して既存のサービスに接続する場合
-  "dockerComposeFile": "../docker-compose.yml", // プロジェクトルートからの相対パス
-  "service": "frontend", // 接続するサービス名 (docker-compose.ymlで定義されているもの)
-  "workspaceFolder": "/app", // コンテナ内で開くワークスペースのパス
+  "name": "Household Budget App (Fullstack)",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "frontend", // デフォルトで接続するサービス（例えばフロントエンド）
+  "workspaceFolder": "/app", // フロントエンドのワークスペース
 
-  // コンテナ起動後に実行するコマンド (オプション)
-  "postCreateCommand": "npm install", // コンテナ作成後にnpm installを実行する場合
+  // 複数のサービスにポートフォワードしたい場合
+  "forwardPorts": [3000, 8000, 5432], // フロントエンド、バックエンド、データベースのポート
 
-  // VS Codeで開くワークスペースのパスを明示的に指定（ホストのワークスペースをコンテナ内で開く）
-  "remoteUser": "node", // コンテナ内のユーザー（node:18-alpineの場合、デフォルトはnodeユーザー）
+  // コンテナ起動後に両方の依存関係をインストールするコマンド
+  // frontend の postCreateCommand で npm install
+  // backend の postCreateCommand は docker-compose.yml で定義することも可能
+  // もしここで両方実行するなら、以下のように記載
+  "postCreateCommand": "cd /app/frontend && npm install && cd /app/backend && pip install -r requirements.txt",
 
-  // コンテナ内で利用したい拡張機能
+  // コンテナ内で利用したい拡張機能（両方の開発に役立つもの）
   "extensions": [
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
     "bradlc.vscode-tailwindcss",
-    "ms-vscode.vscode-typescript-next", // 最新のTypeScriptを使う場合
-    "ms-python.python", // Backend開発用 (FastAPI)
-    "ms-azuretools.vscode-docker" // Docker関連
-  ]
+    "ms-vscode.vscode-typescript-next",
+    "ms-python.python", // Python開発用
+    "ms-azuretools.vscode-docker", // Docker関連
+    "tamasfe.even-better-toml", // TOMLファイル用（もし使うなら）
+    "ms-vscode.cmake-tools" // C/C++開発用（もしPythonの拡張機能などで必要なら）
+  ],
+
+  // ワークスペースフォルダを複数指定
+  // ここで、コンテナ内で開くフォルダを指定します。
+  "workspaceMount": "source=${localWorkspaceFolder},target=/app,type=bind",
+  "folders": [
+    {
+      "name": "frontend",
+      "path": "/app/frontend"
+    },
+    {
+      "name": "backend",
+      "path": "/app/backend"
+    }
+  ],
+  "shutdownAction": "none" // コンテナを閉じてもシャットダウンしない
 }
