@@ -1,0 +1,24 @@
+// household-budget/.devcontainer/devcontainer.json
+{
+  "name": "Household Budget App",
+  // docker-compose.yml を使用して既存のサービスに接続する場合
+  "dockerComposeFile": "../docker-compose.yml", // プロジェクトルートからの相対パス
+  "service": "frontend", // 接続するサービス名 (docker-compose.ymlで定義されているもの)
+  "workspaceFolder": "/app", // コンテナ内で開くワークスペースのパス
+
+  // コンテナ起動後に実行するコマンド (オプション)
+  "postCreateCommand": "npm install", // コンテナ作成後にnpm installを実行する場合
+
+  // VS Codeで開くワークスペースのパスを明示的に指定（ホストのワークスペースをコンテナ内で開く）
+  "remoteUser": "node", // コンテナ内のユーザー（node:18-alpineの場合、デフォルトはnodeユーザー）
+
+  // コンテナ内で利用したい拡張機能
+  "extensions": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss",
+    "ms-vscode.vscode-typescript-next", // 最新のTypeScriptを使う場合
+    "ms-python.python", // Backend開発用 (FastAPI)
+    "ms-azuretools.vscode-docker" // Docker関連
+  ]
+}
