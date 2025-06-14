@@ -274,3 +274,4 @@ pnpm-lock.yaml
 # VS Code settings directory (if you want to ignore all local VS Code settings)
 # If you want to keep extensions.json and tasks.json, use .vscode/*.json above instead
 .vscode/
+.devcontainer/devcontainer.json
